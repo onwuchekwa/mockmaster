@@ -1,0 +1,97 @@
+body {
+  overflow-x: hidden;
+}
+
+.jumbotron {
+    margin-bottom: 0;
+    padding: 1rem 1rem;
+}
+
+main .container {
+    padding: 20px 1rem;
+    min-width: 100%;
+}
+
+.card-container {
+    margin-top: 20px;
+}
+
+.card-margin {
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+.margin {
+  margin: 20px 0;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.login-link {
+    padding: 0 0 20px 0;
+    text-align: center;
+}
+
+.btn-width {
+  width: 120px;
+}
+
+.nav-btn-width {
+  width: 70px;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.margin-bottom {
+  margin-bottom: 32px;
+}
+
+input.parsley-success,
+ select.parsley-success,
+ textarea.parsley-success {
+   color: #468847;
+   background-color: #DFF0D8;
+   border: 1px solid #D6E9C6;
+ }
+
+ input.parsley-error,
+ select.parsley-error,
+ textarea.parsley-error {
+   color: #B94A48;
+   background-color: #F2DEDE;
+   border: 1px solid #EED3D7;
+ }
+
+ .parsley-errors-list {
+   margin: 2px 0 3px;
+   padding: 0;
+   list-style-type: none;
+   font-size: 0.9em;
+   line-height: 0.9em;
+   opacity: 0;
+
+   transition: all .3s ease-in;
+   -o-transition: all .3s ease-in;
+   -moz-transition: all .3s ease-in;
+   -webkit-transition: all .3s ease-in;
+ }
+
+ .parsley-errors-list.filled {
+   opacity: 1;
+ }
+ 
+ .parsley-type,
+ .parsley-required,
+ .parsley-equalto,
+ .parsley-pattern,
+ .parsley-urlstrict,
+ .parsley-length,
+ .parsley-checkemail,
+ .parsley-minlength,
+ .parsley-custom-error-message {
+  color:#ff0000;
+ }
