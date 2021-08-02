@@ -1,3 +1,9 @@
+*, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   overflow-x: hidden;
 }
@@ -9,7 +15,8 @@ body {
 
 main .container {
     padding: 20px 1rem;
-    min-width: 100%;
+    min-width: 100%;      
+    min-height: calc(100vh - 247px);
 }
 
 .card-container {
@@ -48,6 +55,10 @@ main .container {
 
 .margin-bottom {
   margin-bottom: 32px;
+}
+
+.padding {
+  padding: 7px 5px;
 }
 
 input.parsley-success,

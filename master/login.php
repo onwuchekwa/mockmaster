@@ -16,8 +16,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Admin Login | MockMasters</title>
 
-        <link rel="stylesheet" href="/mockmasters/vendors/bootstrap/css/bootstrap.min.css" media="screen">
-        <link rel="stylesheet" href="/mockmasters/css/styles.css">
+        <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css" media="screen">
+        <link rel="stylesheet" href="../css/styles.css">
     </head>
     <body>
         <div class="content-wrapper">
@@ -87,10 +87,10 @@
             </main>
         </div>
 
-        <script src="/mockmasters/vendors/jquery/jquery.js"></script>
-        <script src="/mockmasters/vendors/parsley/parsley.min.js"></script>
-        <script src="/mockmasters/vendors/popper/popper.min.js"></script>
-        <script src="/mockmasters/vendors/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../vendors/jquery/jquery.js"></script>
+        <script src="../vendors/parsley/parsley.min.js"></script>
+        <script src="../vendors/popper/popper.min.js"></script>
+        <script src="../vendors/bootstrap/js/bootstrap.min.js"></script>
 
         <script>
             $(document).ready(function() {

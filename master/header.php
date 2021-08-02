@@ -11,22 +11,22 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><?php echo $pageName ?> | MockMasters</title>
+        <title><?php echo $pageName ?> | MockMaster</title>
 
-        <link rel="stylesheet" href="/mockmasters/vendors/bootstrap/css/bootstrap.min.css" media="screen">
-        <link rel="stylesheet" href="/mockmasters/vendors/DataTables/DataTables/css/dataTables.bootstrap4.min.css" media="screen">
-        <link rel="stylesheet" href="/mockmasters/css/bootstrap-datetimepicker.css">
-        <link rel="stylesheet" href="/mockmasters/css/TimeCircles.css">
-        <link rel="stylesheet" href="/mockmasters/css/styles.css">        
+        <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css" media="screen">
+        <link rel="stylesheet" href="../vendors/DataTables/DataTables/css/dataTables.bootstrap4.min.css" media="screen">
+        <link rel="stylesheet" href="../css/bootstrap-datetimepicker.css">
+        <link rel="stylesheet" href="../css/TimeCircles.css">
+        <link rel="stylesheet" href="../css/styles.css">        
 
-        <script src="/mockmasters/vendors/jquery/jquery.js"></script>
-        <script src="/mockmasters/vendors/DataTables/DataTables/js/jquery.dataTables.min.js"></script>
-        <script src="/mockmasters/vendors/DataTables/DataTables/js/dataTables.bootstrap4.min.js"></script>
-        <script src="/mockmasters/vendors/parsley/parsley.min.js"></script>
-        <script src="/mockmasters/vendors/popper/popper.min.js"></script>
-        <script src="/mockmasters/js/bootstrap-datetimepicker.js"></script>
-        <script src="/mockmasters/js/TimeCircles.js"></script>
-        <script src="/mockmasters/vendors/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../vendors/jquery/jquery.js"></script>
+        <script src="../vendors/DataTables/DataTables/js/jquery.dataTables.min.js"></script>
+        <script src="../vendors/DataTables/DataTables/js/dataTables.bootstrap4.min.js"></script>
+        <script src="../vendors/parsley/parsley.min.js"></script>
+        <script src="../vendors/popper/popper.min.js"></script>
+        <script src="../js/bootstrap-datetimepicker.js"></script>
+        <script src="../js/TimeCircles.js"></script>
+        <script src="../vendors/bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
         <div class="content-wrapper">
@@ -35,7 +35,7 @@
                     <div class="col-sm-12">
                         <div class="jumbotron jumbotron-fluid text-center">
                             <div class="container">
-                                <h1 class="display-4">MockMasters</h1>
+                                <h1 class="display-4">The MockMaster</h1>
                                 <p class="lead">The online examination center</p>
                             </div>
                         </div>

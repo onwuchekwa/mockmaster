@@ -86,5 +86,4 @@ $(document).ready(function() {
     <br />
     <br />
     <br />
-    <br />
-<?php } include('../mockmasters/master/footer.php') ?>
+<?php } include('master/footer.php') ?>

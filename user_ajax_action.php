@@ -3,8 +3,6 @@
 
     include('master/Examination.php');
 
-    //require_once('class/class.phpmailer.php');
-
     $exam = new Examination;
 
     if(isset($_POST['page'])) {

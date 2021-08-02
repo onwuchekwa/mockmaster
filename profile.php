@@ -109,4 +109,4 @@
     });
 </script>
 
-<?php include('../mockmasters/master/footer.php') ?>
+<?php include('master/footer.php') ?>
