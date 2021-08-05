@@ -45,7 +45,10 @@
                             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="enroll-exam.php">Enrolled Exam</a>
+                                        <a class="nav-link" href="enroll-exam.php">Enroll Exams</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="scheduled-exam.php">Take Exam</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="profile.php">Profile</a>

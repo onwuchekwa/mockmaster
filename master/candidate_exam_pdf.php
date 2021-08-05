@@ -113,7 +113,8 @@
         ";
 
       $pdf = new Dompdf();
-      $pdf->set_paper('letter', 'portrait');
+      //$pdf->set_paper('letter', 'portrait');
+      $pdf->setPaper('letter', 'portrait');
       $file_name = $candidateName . ' Mock Exam Result.pdf';
       $pdf->loadHtml($htmlOutput);
       $pdf->render();

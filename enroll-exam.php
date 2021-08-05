@@ -1,63 +1,72 @@
-
 <?php
-
-    // enroll_exam.php
+    // index.php
     include('master/Examination.php');
     $exam = new Examination;
     $exam->candidateSessionPrivate();
-    $pageName = "Enrolled Exam";
-    $exam->changeExamStatus($_SESSION['candidateId']);
+    $pageName = "Enroll Exam";
     include('header.php');
 
+    $examId = 2; //$SESSION['lastInsertId'];
+    $candidateId = $_SESSION['candidateId'];
 ?>
-
-<div class="card card-margin">
-    <div class="card-header">
-        <div class="row">
-            <div class="col-sm-12">
-                <h3 class="panel-title">MockMasters Exam List</h3>
-            </div>
-        </div>
+<!-- Index page for logged in Users -->
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 card-container card-margin">
+        <label>Exam Name</label>
+        <select name="examId" id="examId" class="form-control input-lg">
+            <option value="">Select an Exam</option>
+            <?php echo $exam->populateExamList($candidateId); ?>
+        </select>
+        <br />
+        <div id="examDetails"></div>
     </div>
-    <div class="card-body">
-        <div class="table-responsive col-sm-12">
-            <table id="userExamDataTable" class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Exam Code</th>
-                        <th>Exam Name</th>
-                        <th>Date &amp; Time</th>
-                        <th>Duration</th>
-                        <th>Total Questions</th>
-                        <th>Maximum Score</th>
-                        <th>Minimum Score</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
+    <div class="col-md-3"></div>
 </div>
 
 <script>
-    $(document).ready(function() {
-        var dataTable = $('#userExamDataTable').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "order": [],
-            "ajax": {
+$(document).ready(function() {
+    
+    $('#examId').parsley();
+    var examId = '';
+
+    $('#examId').change(function() {
+        $('#examId').attr('required', 'required');
+
+        if($('#examId').parsley().validate()) {
+            examId = $('#examId').val();
+            $.ajax({
                 url: "user_ajax_action.php",
-                type: "POST",
-                data:{ action: 'fetch', page: 'enroll_exam' }
+                method: "POST",
+                data:{ action: 'fetch_exam', page: 'index', examId: examId },
+                success:function(data) {
+                    $('#examDetails').html(data);
+                }
+            });
+        }
+    });
+    
+    $(document).on('click', '#enroll_button', function() {
+        examId = $('#enroll_button').data('exam_code');
+        examHashCode = $('#enroll_button').data('exam_hash_code');
+        $.ajax({
+            url: "user_ajax_action.php",
+            method: "POST",
+            data:{ action: 'enroll_exam', page: 'index', examId: examId, examHashCode: examHashCode },
+            beforeSend:function() {
+                $('#enroll_button').attr('disabled', 'disabled');
+                $('#enroll_button').text('please wait...');
             },
-            "columnDefs": [{
-                    "targets":[8],
-                    "orderable":false,
-                },
-            ],
+            success:function() {
+                $('#enroll_button').removeClass('btn-warning');
+                $('#enroll_button').addClass('btn-success');
+                $('#enroll_button').text('Exam Enrolled Successfully');
+                $('#enroll_button').attr('disabled', 'disabled');
+            }
         });
     });
+
+});
 </script>
 
 <?php include('master/footer.php') ?>

@@ -39,7 +39,7 @@
                 $exam->query = "INSERT INTO candidate (candidateEmail, candidatePassword, candidateVerificationCode, candidateFirstname, candidateLastname, candidateGender, candidateAddress, candidatePhone) VALUES (:candidateEmail, :candidatePassword, :candidateVerificationCode, :candidateFirstname, :candidateLastname, :candidateGender, :candidateAddress, :candidatePhone)";
 
                 $exam->execute_query();
-
+                /*
                 $subject = "The MockMasters' Candidate Registration Verification";
 
                 $body = '
@@ -56,7 +56,7 @@
                 ';
 
                 $exam->send_email($candidateEmail, $subject, $body);
-
+                */
                 $output = array(
                     'success'       => true
                 );
@@ -156,15 +156,73 @@
         // End of change password
 
         if($_POST['page'] == 'index') {
+            if($_POST['action'] == 'load_exam_form') {
+                $exam->query = "SELECT * FROM exam_master WHERE examCode = '".$_POST['examCode']."'";
+ 
+                 $result = $exam->query_result();
+                 
+                 $output = '<span class="alert alert-danger d-block text-justify"><em><strong>Important Information:</strong> In order to enroll in the upcoming mock exam, you must first make a payment of <strong>Two hundred Ghana Cedis (GH¢200.00) only </strong> to the following MTN Mobile Money Number: <strong>0245 073 010.</strong> Please remember to use the exact <strong>email address</strong> you used for registration as the transaction reference number. This is an important step as only candidates who make payment may successfully enroll on the mock exam</em></span>'; 
+                 
+                 $examText = '';
+                 
+                 foreach($result as $row) {
+                     $examText = $row['examText'];
+                     $examCode = $row['examCode'];
+                 }
+ 
+                 
+                 $output_result = array(
+                     'output'        => $output,
+                     'examText'      => $examText,
+                     'examCode'      => $examCode
+                 );
+ 
+                 echo json_encode($output_result);  
+            }
+
+            if($_POST['action'] == "Schedule Exam") {
+                $exam->query = "SELECT * FROM exam WHERE candidateId = '".$_SESSION['candidateId']."' AND examStatus <> 'Completed'";
+
+                $output = '';
+
+                $total_row = $exam->total_row();
+
+                if($total_row > 0) {                    
+                    $output = array(
+                        'error'   =>  'Sorry! You have a pending exam to be taken.'
+                    );
+                } else {
+                    $exam->data = array(
+                        ':candidateId'          =>      $_SESSION['candidateId'],
+                        ':examCode'             =>      $_POST['examCode'],
+                        ':examDatetime'         =>      $_POST['examDatetime'],
+                        ':examDuration'         =>      $_POST['examDuration'],
+                        ':examTotalQuestion'    =>      $_POST['examTotalQuestion'],
+                        ':examMinScore'         =>      200,
+                        ':examMaxScore'         =>      800,
+                        ':examStatus'           =>      'Created',
+                        ':examHashCode'         =>      md5(rand())
+                    );
+
+                    $exam->query = "INSERT INTO exam (candidateId, examCode, examDatetime, examDuration, examTotalQuestion, examMinScore, examMaxScore, examStatus, examHashCode) VALUES (:candidateId, :examCode, :examDatetime, :examDuration, :examTotalQuestion, :examMinScore, :examMaxScore, :examStatus, :examHashCode)";
+
+                    $exam->execute_query();
+
+                    $output = array(
+                        'success'   =>  'New exam details added successfully.'
+                    );
+                }
+                echo json_encode($output);
+            }
+
             if($_POST['action'] == 'fetch_exam') {
-                $exam->query = "SELECT e.*, examText FROM exam e JOIN exam_master em ON e.examCode = em.examCode WHERE e.examId = '".$_POST['examId']."'";
+                $exam->query = "SELECT e.*, examText FROM exam e JOIN exam_master em ON e.examCode = em.examCode WHERE e.examId = '".$_POST['examId']."' AND candidateId = '".$_SESSION['candidateId']."'";
 
                 $result = $exam->query_result();
 
                 $output = '<div class="card">';
                 $output .= '<div class="card-header">Exam Details</div>';
                 $output .= '<div class="card-body">';
-                $output .= '<span class="alert alert-danger d-block text-justify"><em><strong>Important Information:</strong> In order to enroll in the upcoming mock exam, you must first make a payment of <strong>Two hundred Ghana Cedis (GH¢200.00) only </strong> to the following MTN Mobile Money Number: <strong>0245 073 010.</strong> Please remember to use the exact <strong>email address</strong> you used for registration as the transaction reference number. This is an important step as only candidates who make payment may successfully enroll on the mock exam</em></span>';
                 $output .= '<table class="table table-striped table-hover table-bordered">';
                 foreach($result as $row) {
                     $output .= '
@@ -215,7 +273,7 @@
                 }
                 $output .= '</table>';
                 echo $output;
-            }
+            }            
 
             if($_POST['action'] == 'enroll_exam') {
                 $examDatetime = '';
@@ -306,11 +364,7 @@
                         echo 'No record found';
                     break;
                 } 
-                /*
-                $exam->statement = $exam->connect->prepare($exam->query);
-                $exam->statement->execute();
-                $result = $exam->statement->fetchAll();
-                */
+                
                 $result = $exam->query_result();
                 $questionNo = 1;
 
@@ -638,10 +692,11 @@
 
             if($_POST['action'] == 'endExam') {
                 $exam->data = array(
-                    ':examId'       =>  $_POST['examId'],
-                    ':examStatus'   =>  'Completed'
+                    ':examId'               =>  $_POST['examId'],
+                    ':examStatus'           =>  'Completed',
+                    ':hasCandidatePaid'     => 'no'
                 );
-                $exam->query = "UPDATE exam SET examStatus = :examStatus WHERE examId = :examId";
+                $exam->query = "UPDATE exam e, candidate c SET examStatus = :examStatus, hasCandidatePaid = :hasCandidatePaid WHERE c.candidateId = e.candidateId AND examId = :examId AND examStatus = 'Started'";
 
                 $exam->execute_query();
             }

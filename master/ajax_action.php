@@ -36,7 +36,7 @@
                 $exam->query = "INSERT INTO `admin` (adminFirstname, adminLastname, adminEmail, adminPassword, adminVerificationCode) VALUES (:adminFirstname, :adminLastname, :adminEmail, :adminPassword, :adminVerificationCode)";
 
                 $exam->execute_query();
-
+                /*
                 $subject = 'MockMaster Registration Verification';
                 $body = '
                     <p>Thank you for accepting to serve as an administrator for the Mockmasters.</p>
@@ -52,7 +52,7 @@
                 ';
 
                 $exam->send_email($adminEmail, $subject, $body);
-
+                */
                 $output = array (
                     'success'   =>  true
                 );

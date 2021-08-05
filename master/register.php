@@ -90,7 +90,7 @@
                     },
                     success: function(data) {
                         if(data.success) {
-                            $('#message').html('<span class="alert alert-success d-block">Please check your email</span>');
+                            $('#message').html('<span class="alert alert-success d-block">Your account has been created successfully</span>');
                             $('#adminRegisterForm')[0].reset();
                             $('#adminRegisterForm').parsley().reset();
                         }

@@ -34,7 +34,13 @@
             $this->statement = $this->connect->prepare($this->query);
             $this->statement->execute($this->data);
         }
-
+/*
+        function execute_get_id() {
+            $this->statement = $this->connect->prepare($this->query);
+            $this->statement->execute($this->data);
+            return $this->connect->lastInsertId();
+        }
+*/
         function total_row() {
             $this->execute_query();
             return $this->statement->rowCount();
@@ -213,8 +219,8 @@
             }
         }
 
-        function populateExamList() {
-            $this->query = "SELECT e.examId, examText FROM exam e JOIN exam_master em ON e.examCode = em.examCode WHERE examStatus = 'Created' OR examStatus = 'Pending' ORDER BY em.examCode ASC";
+        function populateExamList($candidateId) {
+            $this->query = "SELECT e.examId, examText FROM exam e JOIN exam_master em ON e.examCode = em.examCode WHERE (examStatus = 'Created' OR examStatus = 'Pending') AND candidateId = $candidateId ORDER BY em.examCode ASC";
 
             $result = $this->query_result();
             $output = '';
@@ -233,43 +239,63 @@
             return false;
         }
 
-        function changeExamStatus($candidateId) {
-            $this->query = "SELECT * FROM enrollment en INNER JOIN exam ex ON ex.examId = en.examId JOIN candidate ca ON ca.candidateId = en.candidateId WHERE en.candidateId = '".$candidateId."'";
-
-            $result = $this->query_result();
-
+        function changeExamStatus($candidateId) { 
             date_default_timezone_set("Africa/Accra");
             $current_datetime = date("Y-m-d") . ' ' . date("H:i:s", STRTOTIME(date('h:i:sa')));
 
-            foreach($result as $row) {
-                if($row["hasCandidatePaid"] == 'yes') {
+            $this->query = "SELECT ex.examDateTime, ca.hasCandidatePaid FROM exam ex JOIN candidate ca ON ca.candidateId = ex.candidateId WHERE ex.candidateId = '".$candidateId."' AND ex.examStatus <> 'Completed'";
+
+            $time_result = $this->query_result();  
+            $original_time = '';
+            $hasCandidatePaid = '';
+
+            foreach($time_result as $time_row){
+                $original_time = $time_row["examDateTime"];
+                $hasCandidatePaid = $time_row['hasCandidatePaid'];
+            }
+
+            if($hasCandidatePaid == 'yes') {
+                if($current_datetime >= $original_time) {            
+                    $this->query = "UPDATE exam ex, enrollment en SET ex.examStartTime = '".$current_datetime."', en.examDateTime = '".$current_datetime."' WHERE en.examId = en.examId AND ex.candidateId = en.candidateId AND en.candidateId = '".$candidateId."' AND ex.examStatus <> 'Completed' AND ex.examStartTime IS NULL";
+    
+                    $this->execute_query();
+                }
+
+                $this->query = "SELECT ex.examId, ex.examDatetime, ex.examStartTime, ex.examDuration FROM enrollment en INNER JOIN exam ex ON ex.examId = en.examId AND ex.candidateId = en.candidateId WHERE en.candidateId = '".$candidateId."' AND ex.examStatus <> 'Completed'";
+
+                $result = $this->query_result();            
+
+                foreach($result as $row) {
                     $exam_start_time = $row["examDatetime"];
+
+                    $actual_start_time = $row['examStartTime'];
 
                     $duration = $row["examDuration"] . ' minutes';
 
-                    $exam_end_time = strtotime($exam_start_time . '+' . $duration);
+                    $exam_end_time = strtotime($actual_start_time . '+' . $duration);
 
                     $exam_end_time = date('Y-m-d H:i:s', $exam_end_time);
 
                     $view_exam = '';
 
-                    if($current_datetime >= $exam_start_time && $current_datetime <= $exam_end_time) {
+                    if(($current_datetime >= $exam_start_time || $current_datetime >= $actual_start_time) && $current_datetime <= $exam_end_time) {
                         //exam started
                         $this->data = array(
-                            ':examStatus'	=>	'Started'
+                            ':examStatus'	 =>	'Started'
                         );
                         
-                        $this->query = "UPDATE exam SET examStatus = :examStatus WHERE examId = '".$row['examId']."'";
+                        $this->query = "UPDATE exam SET examStatus = :examStatus WHERE examId = '".$row['examId']."' AND examStatus <> 'Completed'";
 
                         $this->execute_query();
                     } else {
                         if($current_datetime > $exam_end_time) {
                             //exam completed
                             $this->data = array(
-                                ':examStatus'	=>	'Completed'
+                                ':examStatus'	        =>	'Completed',
+                                ':hasCandidatePaid'     => 'no'
                             );
 
-                            $this->query = "UPDATE exam SET examStatus = :examStatus WHERE examId = '".$row['examId']."'";
+                            $this->query = "UPDATE exam e, candidate c SET examStatus = :examStatus, hasCandidatePaid = :hasCandidatePaid WHERE c.candidateId = e.candidateId AND examId = '".$row['examId']."' AND examStatus = 'Started'";
 
                             $this->execute_query();
                         }					

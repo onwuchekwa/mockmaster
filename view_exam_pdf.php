@@ -69,7 +69,7 @@
       if($scaleScore < 450) {
         $htmlOutput .= "We regret to inform you that you <strong style='background-color: #dc3545; color: #fffff; padding: 5px;'>FAILED</strong> the exam. We encourage you to study a little harder and wish you the very best on the international exam.</p>";
         } else {
-            $htmlOutput .= "We are pleased to inform you that you successfully <strong style='background-color: ##28a745; color: #fffff; padding: 5px;'>PASSED</strong> the exam. We wish you the very best on the international exam</p>";
+            $htmlOutput .= "We are pleased to inform you that you successfully <strong style='background-color: #28a745; color: #fffff; padding: 5px;'>PASSED</strong> the exam. We wish you the very best on the international exam</p>";
         }
         
         $htmlOutput .= "
@@ -111,7 +111,8 @@
         ";
 
       $pdf = new Dompdf();
-      $pdf->set_paper('letter', 'portrait');
+      $pdf->setPaper('letter', 'portrait');
+      //$pdf->set_paper('letter', 'portrait');
       $file_name = $candidateName . ' Mock Exam Result.pdf';
       $pdf->loadHtml($htmlOutput);
       $pdf->render();

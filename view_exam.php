@@ -16,7 +16,7 @@
     if(isset($_GET['code'])) {
         $exam->changeExamStatus($_SESSION['candidateId']);
         $examId = $exam->getExamId($_GET['code']);
-        $exam->query = "SELECT examStatus, examDatetime, examDuration, ex.examCode, examText FROM exam ex JOIN exam_master em ON ex.examCode = em.examCode WHERE ex.examId = $examId";
+        $exam->query = "SELECT examStatus, examStartTime, examDuration, ex.examCode, examText FROM exam ex JOIN exam_master em ON ex.examCode = em.examCode WHERE ex.examId = $examId";
 
         $result = $exam->query_result();
 
@@ -25,7 +25,7 @@
             $examStatus = $row['examStatus'];
             $examCode = $row['examCode'];
             $examText = $row['examText'];
-            $examStartTime = $row['examDatetime'];
+            $examStartTime = $row['examStartTime'];
             $examDate = date('j F Y', strtotime($examStartTime));
             $examDuration = $row['examDuration'] . ' minute';
             $examEndTime = strtotime($examStartTime . '+' . $examDuration);
@@ -50,7 +50,7 @@
         $exam->execute_query();
 ?>
 
-<div class="row">
+<div class="row" id="examTest">
   <div class="col-md-8">
     <div class="card margin">
       <div class="card-header"><h4>MockMasters Online Exam</h4></div>
@@ -122,6 +122,12 @@
                   $('#' + questValue).removeClass('btn-danger');
                   $('#' + questValue).addClass('btn-primary');
                 } 
+
+                $('#' + questValue).on('click', function(e) {
+                  let testElement = $('#examTest').offset();
+                  $('html, body').stop().animate({scrollTop: testElement.top}, 500);
+                  e.preventDefault();
+                });
               });
             }
           });
