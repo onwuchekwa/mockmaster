@@ -1,10 +1,12 @@
 <?php
+    /*
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
     require dirname(__DIR__) .'/class/vendor/Exception.php';
     require dirname(__DIR__) .'/class/vendor/PHPMailer.php';
     require dirname(__DIR__) .'/class/vendor/SMTP.php';
+    */
     
     class Examination {
         var $host;
@@ -46,8 +48,8 @@
             return $this->statement->rowCount();
         }
 
-        function send_email($receiver_email, $subject, $body) {
-            /*
+        /*
+        function send_email($receiver_email, $subject, $body) {            
             $mail = new PHPMailer;
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
@@ -66,7 +68,7 @@
             if(!$mail->Send()){
                 echo $mail->ErrorInfo;
             }
-            */
+            
             
             $mail = new PHPMailer;
             $mail->isSMTP();
@@ -88,6 +90,7 @@
                 echo $mail->ErrorInfo;
             }
         }
+        */
 
         function redirect($page) {
             header('location: '.$page.'');
