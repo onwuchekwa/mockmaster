@@ -283,7 +283,7 @@
         </div>
         <div>
           <p><?php echo $candidateName; ?></p>
-          <p>This is to notify you of your <?php echo $examText . ' (' . $examCode . ')'; ?> mock exam result held on <?php echo $examDate; ?>. A scaled score of 450 or higher is required to pass, which represent the minimum consistent standard of knowledge.</p><p>
+          <p>This is to notify you of your <?php echo $examText; ?> mock exam result held on <?php echo $examDate; ?>. A scaled score of 450 or higher is required to pass, which represent the minimum consistent standard of knowledge.</p><p>
           <?php
             if($scaleScore < 450) {
               echo 'We regret to inform you that you <strong class="badge badge-danger">FAILED</strong> the exam. We encourage you to study a little harder and wish you the very best on the international exam.</p>';

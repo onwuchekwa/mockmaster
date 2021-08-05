@@ -65,7 +65,7 @@
       $htmlOutput .= "
       <div style='text-align: left;'>
         <p>$candidateName</p>
-        <p>This is to notify you of your $examText ($examCode) mock exam result held on $examDate. A scaled score of 450 or higher is required to pass, which represent the minimum consistent standard of knowledge.</p><p>
+        <p>This is to notify you of your $examText mock exam result held on $examDate. A scaled score of 450 or higher is required to pass, which represent the minimum consistent standard of knowledge.</p><p>
       ";
      
       if($scaleScore < 450) {
