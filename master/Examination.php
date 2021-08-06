@@ -259,7 +259,7 @@
 
             if($hasCandidatePaid == 'yes') {
                 if($current_datetime >= $original_time) {            
-                    $this->query = "UPDATE exam ex, enrollment en SET ex.examStartTime = '".$current_datetime."', en.examDateTime = '".$current_datetime."' WHERE en.examId = en.examId AND ex.candidateId = en.candidateId AND en.candidateId = '".$candidateId."' AND ex.examStatus <> 'Completed' AND ex.examStartTime IS NULL";
+                    $this->query = "UPDATE exam ex, enrollment en SET ex.examStartTime = '".$current_datetime."', en.examDateTime = '".$current_datetime."' WHERE ex.examId = en.examId AND ex.candidateId = en.candidateId AND en.candidateId = '".$candidateId."' AND ex.examStatus <> 'Completed' AND ex.examStartTime IS NULL";
     
                     $this->execute_query();
                 }

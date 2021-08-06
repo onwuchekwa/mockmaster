@@ -109,7 +109,7 @@
         $htmlOutput .= "
             </table></div><div><p>The above represents a conversion of individually weighted raw scores based on a common scale. As such, do not attempt to apply a simple arithmetic mean to convert area scores to your total scaled score.</p></div>
             <h6>* This report is computer-generated. Therefore, no signature or stamp is required.</h6>
-            <p>Best Regards,<br>Mock Team</p>
+            <p>Best Regards,<br>The Mockmaster</p>
         ";
 
       $pdf = new Dompdf();

@@ -126,7 +126,7 @@
             if($_POST['action'] == 'fetch') {
                 $output = array ();
 
-                $exam->query = "SELECT e.examHashCode, e.examId, em.examCode, examText, examDatetime, examDuration, examTotalQuestion, examMaxScore, examMinScore, examStatus FROM exam e JOIN exam_master em ON e.examCode = em.examCode WHERE e.adminId = '".$_SESSION['adminId']."' AND (";
+                $exam->query = "SELECT e.examHashCode, e.examId, em.examCode, examText, examDatetime, examDuration, examTotalQuestion, examMaxScore, examMinScore, examStatus FROM exam e JOIN exam_master em ON e.examCode = em.examCode AND (";
 
                 if(isset($_POST['search']['value'])) {
                     $exam->query .= 'em.examCode LIKE "%'.$_POST["search"]["value"].'%"';
@@ -166,7 +166,7 @@
 
                 $result = $exam->query_result();
 
-                $exam->query = 'SELECT e.examHashCode, e.examId, em.examCode, examText, examDatetime, examDuration, examTotalQuestion, examMaxScore, examMinScore, examStatus FROM exam e JOIN exam_master em ON e.examCode = em.examCode WHERE e.adminId = "'.$_SESSION["adminId"].'"';
+                $exam->query = 'SELECT e.examHashCode, e.examId, em.examCode, examText, examDatetime, examDuration, examTotalQuestion, examMaxScore, examMinScore, examStatus FROM exam e JOIN exam_master em ON e.examCode = em.examCode';
 
                 $total_rows = $exam->total_row();
 
@@ -225,7 +225,7 @@
                 );    
                 echo json_encode($output);
             }
-
+/*
             if($_POST['action'] == "Add New Exam") {
                 $exam->data = array(
                     ':adminId'              =>      $_SESSION['adminId'],
@@ -248,7 +248,7 @@
                 );
                 echo json_encode($output);
             }
-
+*/
             if($_POST['action'] == 'edit_fetch') {
                 $exam->query = "SELECT * FROM exam WHERE examId = '".$_POST["examId"]."'";
 
@@ -276,7 +276,7 @@
                     ':examId'               =>      $_POST['examId']
                 );
 
-                $exam->query = "UPDATE exam SET examCode = :examCode, examDatetime = :examDatetime, examDuration = :examDuration, examTotalQuestion = :examTotalQuestion, examMinScore = :examMinScore, examMaxScore = :examMaxScore WHERE examId = :examId";
+                $exam->query = "UPDATE exam ex, enrollment en SET ex.examCode = :examCode, ex.examDatetime = :examDatetime, ex.examDuration = :examDuration, ex.examTotalQuestion = :examTotalQuestion, ex.examMinScore = :examMinScore, ex.examMaxScore = :examMaxScore, en.examDatetime = :examDatetime WHERE en.examId = en.examId AND ex.examId = :examId";
                 $exam->execute_query($exam->data);
                 $output = array (
                     'success'       =>      'Exam details updated successfully.'
@@ -288,8 +288,13 @@
                 $exam->data = array (
                     ':examId'       =>      $_POST['examId']
                 );
-                $exam->query = "DELETE FROM exam WHERE examId = :examId";
-                $exam->execute_query();
+
+                $candidateExamTables = array('cand_exam_question', 'enrollment', 'exam');
+                foreach($candidateExamTables as $candidateExamTable) {
+                    $exam->query = "DELETE FROM $candidateExamTable WHERE examId = :examId";
+                    $exam->execute_query();
+                }
+
                 $output = array (
                     'success'       =>  'Exam details has been deleted successfully.'
                 );

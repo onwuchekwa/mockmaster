@@ -1,4 +1,9 @@
 <?php
+    header('Expires: Sun, 01 Jan 2020 00:00:00 GMT');
+    header('Cache-Control: no-store, no-cache, must-revalidate');
+    header('Cache-Control: post-check=0, pre-check=0', FALSE);
+    header('Pragma: no-cache');
+
     include('Examination.php');
 
     $exam = new Examination;
@@ -11,7 +16,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><?php echo $pageName ?> | MockMaster</title>
+        <title><?php echo $pageName ?> | The MockMaster</title>
 
         <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css" media="screen">
         <link rel="stylesheet" href="../vendors/DataTables/DataTables/css/dataTables.bootstrap4.min.css" media="screen">
@@ -51,9 +56,9 @@
                             </button>
                             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                                 <ul class="navbar-nav">
-                                    <!--<li class="nav-item">
+                                    <li class="nav-item">
                                         <a class="nav-link" href="exam.php">Exam</a>
-                                    </li>-->
+                                    </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="domain.php">Question</a>
                                     </li>

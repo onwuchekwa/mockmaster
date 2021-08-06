@@ -11,9 +11,9 @@
             <div class="col-md-9">
                 <h3 class="panel-title">MockMasters Exam List</h3>
             </div>
-            <div class="col-md-3 text-align-right">
+            <!--<div class="col-md-3 text-align-right">
                 <button type="button" id="addExamButton" class="btn btn-info btn-sm">Add New Exam</button>
-            </div>
+            </div>-->
         </div>
     </div>
     <div class="card-body">

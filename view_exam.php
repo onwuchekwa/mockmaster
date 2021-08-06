@@ -123,11 +123,17 @@
                   $('#' + questValue).addClass('btn-primary');
                 } 
 
+                $('#' + questValue).on('click', function() {
+                  let testElement = $('#examTest').offset();
+                  $('html, body').stop().animate({scrollTop: testElement.top}, 500);
+                });
+                /*
                 $('#' + questValue).on('click', function(e) {
                   let testElement = $('#examTest').offset();
                   $('html, body').stop().animate({scrollTop: testElement.top}, 500);
                   e.preventDefault();
                 });
+                */
               });
             }
           });
@@ -277,7 +283,7 @@
       </div>
       <div class="card-body">
         <div class="center-text">
-          <h2><?php echo $examText . ' (' . $examCode . ')'; ?></h2>
+          <h2><?php echo $examText; ?></h2>
           <h3>Notice of Mock Result</h3>
           <h5>TESTED on <?php echo $examDate; ?></h5>
         </div>
@@ -326,7 +332,7 @@
         </div>
         <div class="card-footer">
           <p>This report is computer-generated. Therefore, no signature or stamp is required.</p>
-          <p>Best Regards,<br>Mock Team</p>
+          <p>Best Regards,<br>The Mockmaster</p>
         </div>
       </div>
   </div>

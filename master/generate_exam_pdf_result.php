@@ -43,7 +43,7 @@
 
         $htmlOutput = "
         <div style='text-align: center; line-height: 5px;'>
-            <h2>$examText ($examCode)</h2>
+            <h2>$examText</h2>
             <h3>Notice of Mock Result</h3>
             <h5>TESTED on $examDate</h5>
         </div>
@@ -95,12 +95,13 @@
             </table>
         </div>
         <h6>* This report is computer-generated. Therefore, no signature or stamp is required.</h6>
-        <p>Best Regards,<br>Mock Team</p>
+        <p>Best Regards,<br>The Mockmaster</p>
       ";
 
 
       $pdf = new Dompdf();
-      $pdf->set_paper('letter', 'portrait');
+      //$pdf->set_paper('letter', 'portrait');
+      $pdf->setPaper('letter', 'portrait');
       $file_name = $examCode . ' Mock Exam Result.pdf';
       $pdf->loadHtml($htmlOutput);
       $pdf->render();

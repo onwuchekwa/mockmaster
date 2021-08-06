@@ -117,7 +117,7 @@
     </div>
     <div class="card-footer">
         <p>This report is computer-generated. Therefore, no signature or stamp is required.</p>
-        <p>Best Regards,<br>Mock Team</p>
+        <p>Best Regards,<br>The Mockmaster</p>
     </div>
     </div>
 </div>
