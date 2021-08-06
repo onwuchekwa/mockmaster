@@ -161,7 +161,9 @@
  
                  $result = $exam->query_result();
                  
-                 $output = '<span class="alert alert-danger d-block text-justify"><em><strong>Important Information:</strong> In order to enroll in the upcoming mock exam, you must first make a payment of <strong>Two hundred Ghana Cedis (GH¢200.00) only </strong> to the following MTN Mobile Money Number: <strong>0245 073 010.</strong> Please remember to use the exact <strong>email address</strong> you used for registration as the transaction reference number. This is an important step as only candidates who make payment may successfully enroll on the mock exam</em></span>'; 
+                $output = '<span class="alert alert-warning d-block text-justify">strong>Candidates who made payments through ISACA Accra Chapter can ignore this message.</strong></span>';
+
+                 $output .= '<span class="alert alert-danger d-block text-justify"><em><strong>Important Information:</strong> In order to enroll in the upcoming mock exam, you must first make a payment of <strong>Two hundred Ghana Cedis (GH¢200.00) only </strong> to the following MTN Mobile Money Number: <strong>0245 073 010.</strong> Please remember to use the exact <strong>email address</strong> you used for registration as the transaction reference number. This is an important step as only candidates who make payment may successfully enroll on the mock exam</em></span>'; 
                  
                  $examText = '';
                  
